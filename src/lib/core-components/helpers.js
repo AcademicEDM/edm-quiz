@@ -15,6 +15,7 @@ export const checkAnswer = (index, correctAnswer, answerSelectionType, {
     showNextQuestionButton,
     incorrect,
     correct,
+    buttonsCount,
     setButtons,
     setCorrectAnswer,
     setIncorrectAnswer,
@@ -25,12 +26,10 @@ export const checkAnswer = (index, correctAnswer, answerSelectionType, {
     setUserAttempt
 }) => {
     const indexStr = `${index}`;
-    const disabledAll = {
-        0: {disabled: true},
-        1: {disabled: true},
-        2: {disabled: true},
-        3: {disabled: true}
-    };
+    const disabledAll = {};
+    for (let i = 0; i < buttonsCount; i++) {
+        disabledAll[i] = { disabled: true }
+    }
     if (answerSelectionType === 'single') {
         if (userInput[currentQuestionIndex] === undefined) {
             userInput.push(index)

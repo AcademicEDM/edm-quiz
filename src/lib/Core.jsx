@@ -174,6 +174,7 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
       showNextQuestionButton,
       incorrect,
       correct,
+      buttonsCount: answers.length,
       setButtons,
       setCorrectAnswer,
       setIncorrectAnswer,
