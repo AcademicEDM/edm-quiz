@@ -136,6 +136,10 @@
   margin-bottom: 20px;
 }
 
+.tag-container {
+  display: flex;
+}
+
 .react-quiz-container .selection-tag,
 .react-quiz-container .number-of-selection{
   padding: 7px;
