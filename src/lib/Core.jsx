@@ -225,9 +225,12 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
           }
           {answerSelectionType === 'multiple' &&
           <span className="multiple selection-tag">{multipleSelectionTagText}</span>}
-          <span className="number-of-selection">
-            {pickNumberOfSelection.replace("<numberOfSelection>", numberOfSelection)}
-          </span>
+          {
+            numberOfSelection > 1 &&
+              <span className="number-of-selection">
+                {pickNumberOfSelection.replace("<numberOfSelection>", numberOfSelection)}
+              </span>
+          }
           {segment && <span className="selection-tag segment">{segment}</span>}
         </div>
     )
