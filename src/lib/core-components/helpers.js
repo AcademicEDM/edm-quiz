@@ -49,7 +49,6 @@ export const checkAnswer = (index, correctAnswer, answerSelectionType, {
         if (unselectingCurrent) {
             setCorrectAnswer(false);
             setIncorrectAnswer(false);
-            setShowNextQuestionButton(true);
         } else if (answerNumberStr === correctAnswer) {
             correct.push(currentQuestionIndex);
             setCorrectAnswer(true);
@@ -76,19 +75,14 @@ export const checkAnswer = (index, correctAnswer, answerSelectionType, {
 
         const selectedAnswerIndexInUserInputIndex = userInput[currentQuestionIndex].indexOf(index);
 
-        if (selectedAnswerIndexInUserInputIndex !== -1) {
+        if (unselectingCurrent) {
             userInput[currentQuestionIndex].splice(selectedAnswerIndexInUserInputIndex, 1);
-            const correctIndex = correct.indexOf(index), incorrectIndex = incorrect.indexOf(index);
-            if (correctAnswer.includes(answerNumberStr)) {
-                if (correctIndex !== -1) {
-                    correct.splice(correctIndex, 1);
-                }
-                setCorrectAnswer(false);
-            } else if (incorrectIndex !== -1) {
-                incorrect.splice(incorrectIndex, 1);
-                setIncorrectAnswer(false);
-            }
+            correct = correct.filter(x => x != currentQuestionIndex);
             setCorrect([...correct]);
+            setCorrectAnswer(false);
+            incorrect = incorrect.filter(x => x!== currentQuestionIndex);
+            setIncorrect([...incorrect]);
+            setIncorrectAnswer(false);
             setUserInput({...userInput});
         } else {
             if (userInput[currentQuestionIndex].length < maxNumberOfMultipleSelection) {
@@ -96,28 +90,24 @@ export const checkAnswer = (index, correctAnswer, answerSelectionType, {
             } else if (showInstantFeedback) {
                 return;
             }
-
             if (maxNumberOfMultipleSelection === userInput[currentQuestionIndex].length) {
-                let cnt = 0;
+                let correctSelectionCount = 0;
                 for (let i = 0; i < userInput[currentQuestionIndex].length; i++) {
                     if (correctAnswer.includes(userInput[currentQuestionIndex][i]+1)) {
-                        cnt++;
+                        correctSelectionCount++;
                     }
                 }
-
-                if (cnt === maxNumberOfMultipleSelection) {
+                if (correctSelectionCount === maxNumberOfMultipleSelection) {
                     correct.push(currentQuestionIndex);
-
+                    setCorrect([...correct]);
                     setCorrectAnswer(true);
                     setIncorrectAnswer(false);
-                    setCorrect([...correct]);
                     setShowNextQuestionButton(true);
                 } else {
                     incorrect.push(currentQuestionIndex);
-
+                    setIncorrect([...incorrect]);
                     setIncorrectAnswer(true);
                     setCorrectAnswer(false);
-                    setIncorrect([...incorrect]);
                     setShowNextQuestionButton(true);
                 }
             }
