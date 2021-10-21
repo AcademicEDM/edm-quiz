@@ -41,6 +41,11 @@
   color: white;
 }
 
+.react-quiz-container .questionWrapper .btn.selected {
+  background: blue;
+  color: white;
+}
+
 .react-quiz-container .questionModal .alert {
   padding: 20px;
   margin-bottom: 21px;
@@ -58,8 +63,20 @@
   color: white;
 }
 
+.react-quiz-container .btn.navigationBtn {
+  margin: 0px 5px;
+}
+
 .react-quiz-container .questionWrapper img {
   width: 100%;
+}
+
+.react-quiz-container .answers-container {
+  display: grid;
+  grid-template-columns: 300px 300px;
+  grid-row: auto auto;
+  grid-column-gap: 20px;
+  grid-row-gap: 0;
 }
 
 .react-quiz-container .answerBtn {

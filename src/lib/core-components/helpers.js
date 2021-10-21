@@ -9,155 +9,119 @@ export const rawMarkup = (data) => {
 
 export const checkAnswer = (index, correctAnswer, answerSelectionType, {
     userInput,
-    userAttempt,
     currentQuestionIndex,
     continueTillCorrect,
-    showNextQuestionButton,
     incorrect,
     correct,
-    buttonsCount,
-    setButtons,
+    showInstantFeedback,
     setCorrectAnswer,
     setIncorrectAnswer,
     setCorrect,
     setIncorrect,
     setShowNextQuestionButton,
     setUserInput,
-    setUserAttempt
 }) => {
-    const indexStr = `${index}`;
-    const disabledAll = {};
-    for (let i = 0; i < buttonsCount; i++) {
-        disabledAll[i] = { disabled: true }
+    const unselectingCurrent = userInput[currentQuestionIndex] && userInput[currentQuestionIndex].indexOf(index) !== -1;
+
+    if (showInstantFeedback && unselectingCurrent) {
+        return;
     }
+
+    const answerNumberStr = `${index+1}`;
+
     if (answerSelectionType === 'single') {
-        if (userInput[currentQuestionIndex] === undefined) {
-            userInput.push(index)
+        if (showInstantFeedback && userInput[currentQuestionIndex] && userInput[currentQuestionIndex].length === 1) {
+            return;
         }
-
-        if (indexStr === correctAnswer) {
-            if (incorrect.indexOf(currentQuestionIndex) < 0 && correct.indexOf(currentQuestionIndex) < 0) {
-                correct.push(currentQuestionIndex);
-            }
-
-            setButtons((prevState) => ({
-                    ...prevState,
-                    ...disabledAll,
-                    [index - 1]: {
-                        className: (indexStr === correctAnswer) ? "correct" : "incorrect"
-                    },
-                })
-            );
-
+        if (unselectingCurrent) {
+            userInput[currentQuestionIndex] = [];
+        } else {
+            userInput[currentQuestionIndex] = [index];
+        }
+        const incorrectIndex = incorrect.indexOf(currentQuestionIndex);
+        const correctIndex = correct.indexOf(currentQuestionIndex);
+        if (incorrectIndex >= 0) {
+            incorrect.splice(incorrectIndex, 1);
+        }
+        if (correctIndex >= 0) {
+            correct.splice(correctIndex, 1);
+        }
+        if (unselectingCurrent) {
+            setCorrectAnswer(false);
+            setIncorrectAnswer(false);
+            setShowNextQuestionButton(true);
+        } else if (answerNumberStr === correctAnswer) {
+            correct.push(currentQuestionIndex);
             setCorrectAnswer(true);
             setIncorrectAnswer(false);
-            setCorrect(correct);
-            setShowNextQuestionButton(true)
-
+            setShowNextQuestionButton(true);
         } else {
-            if (correct.indexOf(currentQuestionIndex) < 0 && incorrect.indexOf(currentQuestionIndex) < 0) {
-                incorrect.push(currentQuestionIndex)
-            }
-
-            if (continueTillCorrect) {
-                setButtons((prevState) => (
-                    Object.assign(
-                        {},
-                        prevState,
-                        {
-                            [index - 1]: {
-                                disabled: !prevState[index - 1]
-                            }
-                        }
-                    )
-                ))
-            } else {
-                setButtons((prevState) => (
-                    Object.assign(
-                        {},
-                        prevState,
-                        {
-                            ...disabledAll,
-                            [index - 1]: {
-                                className: (indexStr === correctAnswer) ? "correct" : "incorrect"
-                            },
-                        }
-                    )
-                ));
-
+            incorrect.push(currentQuestionIndex);
+            setCorrectAnswer(false);
+            setIncorrectAnswer(true);
+            if (!continueTillCorrect) {
                 setShowNextQuestionButton(true)
             }
-
-            setIncorrectAnswer(true);
-            setCorrectAnswer(false);
-            setIncorrect(incorrect)
         }
+        setCorrect([...correct]);
+        setIncorrect([...incorrect]);
+        setUserInput({...userInput});
     } else {
 
         let maxNumberOfMultipleSelection = correctAnswer.length;
 
-        if (userInput[currentQuestionIndex] === undefined) {
-            userInput[currentQuestionIndex] = []
+        if (!userInput[currentQuestionIndex]) {
+            userInput[currentQuestionIndex] = [];
         }
 
-        if (userInput[currentQuestionIndex].length < maxNumberOfMultipleSelection) {
-            userInput[currentQuestionIndex].push(index);
+        const selectedAnswerIndexInUserInputIndex = userInput[currentQuestionIndex].indexOf(index);
 
-            if (correctAnswer.includes(index)) {
-                if (userInput[currentQuestionIndex].length <= maxNumberOfMultipleSelection) {
-
-                    setButtons((prevState) => ({
-                            ...prevState,
-                            [index - 1]: {
-                                disabled: !prevState[index - 1],
-                                className: (correctAnswer.includes(index)) ? "correct" : "incorrect"
-                            },
-                        })
-                    )
+        if (selectedAnswerIndexInUserInputIndex !== -1) {
+            userInput[currentQuestionIndex].splice(selectedAnswerIndexInUserInputIndex, 1);
+            const correctIndex = correct.indexOf(index), incorrectIndex = incorrect.indexOf(index);
+            if (correctAnswer.includes(answerNumberStr)) {
+                if (correctIndex !== -1) {
+                    correct.splice(correctIndex, 1);
                 }
-            } else {
-                if (userInput[currentQuestionIndex].length <= maxNumberOfMultipleSelection) {
-                    setButtons((prevState) => ({
-                            ...prevState,
-                            [index - 1]: {
-                                className: (correctAnswer.includes(index)) ? "correct" : "incorrect"
-                            },
-                        })
-                    )
-                }
-            }
-        }
-
-        if (maxNumberOfMultipleSelection === userAttempt) {
-            let cnt = 0;
-            for (let i = 0; i < correctAnswer.length; i++) {
-                if (userInput[currentQuestionIndex].includes(correctAnswer[i])) {
-                    cnt++;
-                }
-            }
-
-            if (cnt === maxNumberOfMultipleSelection) {
-                correct.push(currentQuestionIndex);
-
-                setCorrectAnswer(true);
-                setIncorrectAnswer(false);
-                setCorrect(correct);
-                setShowNextQuestionButton(true);
-                setUserAttempt(1)
-            } else {
-                incorrect.push(currentQuestionIndex);
-
-                setIncorrectAnswer(true);
                 setCorrectAnswer(false);
-                setIncorrect(incorrect);
-                setShowNextQuestionButton(true);
-                setUserAttempt(1)
+            } else if (incorrectIndex !== -1) {
+                incorrect.splice(incorrectIndex, 1);
+                setIncorrectAnswer(false);
             }
+            setCorrect([...correct]);
+            setUserInput({...userInput});
         } else {
-            if (!showNextQuestionButton) {
-                setUserInput(userInput);
-                setUserAttempt(userAttempt + 1)
+            if (userInput[currentQuestionIndex].length < maxNumberOfMultipleSelection) {
+                userInput[currentQuestionIndex].push(index);
+            } else if (showInstantFeedback) {
+                return;
             }
+
+            if (maxNumberOfMultipleSelection === userInput[currentQuestionIndex].length) {
+                let cnt = 0;
+                for (let i = 0; i < userInput[currentQuestionIndex].length; i++) {
+                    if (correctAnswer.includes(userInput[currentQuestionIndex][i]+1)) {
+                        cnt++;
+                    }
+                }
+
+                if (cnt === maxNumberOfMultipleSelection) {
+                    correct.push(currentQuestionIndex);
+
+                    setCorrectAnswer(true);
+                    setIncorrectAnswer(false);
+                    setCorrect([...correct]);
+                    setShowNextQuestionButton(true);
+                } else {
+                    incorrect.push(currentQuestionIndex);
+
+                    setIncorrectAnswer(true);
+                    setCorrectAnswer(false);
+                    setIncorrect([...incorrect]);
+                    setShowNextQuestionButton(true);
+                }
+            }
+            setUserInput({ ...userInput });
         }
     }
 };

@@ -4,7 +4,7 @@ import Core from './Core';
 import { defaultLocale } from './Locale';
 import "./styles.css";
 
-const Quiz = ({ quiz, shuffle, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect }) => {
+const Quiz = ({ quiz, shuffle, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, allowQuestionNavigation }) => {
   const [start, setStart] = useState(false)
   const [questions, setQuestions] = useState(quiz.questions)
 
@@ -142,7 +142,7 @@ Quiz.propTypes = {
   onComplete: PropTypes.func,
   customResultPage: PropTypes.func,
   showInstantFeedback: PropTypes.bool,
-  continueTillCorrect: PropTypes.bool
+  continueTillCorrect: PropTypes.bool,
 };
 
 export default Quiz;

@@ -11,13 +11,10 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
   const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
   const [endQuiz, setEndQuiz] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [buttons, setButtons] = useState({});
-  const [buttonClasses, setButtonClasses] = useState({});
   const [correct, setCorrect] = useState([]);
   const [incorrect, setIncorrect] = useState([]);
-  const [userInput, setUserInput] = useState([]);
+  const [userInput, setUserInput] = useState({});
   const [filteredValue, setFilteredValue] = useState('all');
-  const [userAttempt, setUserAttempt] = useState(1);
   const [showDefaultResultState, setShowDefaultResult] = useState(true);
   const [answerSelectionTypeState, setAnswerSelectionType] = useState(undefined);
 
@@ -79,12 +76,19 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
     }
   }, [endQuiz, questionSummary]);
 
+  const previousQuestion = (currentQuestionIndex) => {
+    if (currentQuestionIndex - 1 >= 0) {
+      setIncorrectAnswer(false);
+      setCorrectAnswer(false);
+      setShowNextQuestionButton(false);
+      setCurrentQuestionIndex(currentQuestionIndex - 1)
+    }
+  };
+
   const nextQuestion = (currentQuestionIndex) => {
     setIncorrectAnswer(false);
     setCorrectAnswer(false);
     setShowNextQuestionButton(false);
-    setButtons({});
-
     if (currentQuestionIndex + 1 === questions.length) {
       setEndQuiz(true)
     } else {
@@ -96,12 +100,12 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
     setFilteredValue(event.target.value)
   };
 
-  const renderAnswerInResult = (question, userInputIndex) => {
+  const renderAnswerInResult = (question, userInputIndexes) => {
     const {answers, correctAnswer, questionType} = question;
     let {answerSelectionType} = question;
     let answerBtnCorrectClassName;
     let answerBtnIncorrectClassName;
-
+    
     // Default single to avoid code breaking due to automatic version upgrade
     answerSelectionType = answerSelectionType || 'single';
 
@@ -110,11 +114,11 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
       if (answerSelectionType === 'single') {
           // correctAnswer - is string
         answerBtnCorrectClassName = (`${index + 1}` === correctAnswer ? 'correct' : '');
-        answerBtnIncorrectClassName = (`${userInputIndex}` !== correctAnswer && `${index + 1}` === `${userInputIndex}` ? 'incorrect' : '');
+        answerBtnIncorrectClassName = (`${index+1}` !== correctAnswer && userInputIndexes.includes(index) ? 'incorrect' : '');
       } else {
           // correctAnswer - is array of numbers
         answerBtnCorrectClassName = (correctAnswer.includes(index + 1) ? 'correct' : '');
-        answerBtnIncorrectClassName = (!correctAnswer.includes(index + 1) && userInputIndex.includes(index + 1) ? 'incorrect' : '')
+        answerBtnIncorrectClassName = (!correctAnswer.includes(index + 1) && userInputIndexes.includes(index) ? 'incorrect' : '')
       }
 
       return (
@@ -130,59 +134,58 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
   };
 
   const renderQuizResultQuestions = useCallback(() => {
-    let filteredQuestions;
-    let filteredUserInput;
+    let filteredQuestionIndexes = [];
+    // let filteredUserInput = userInput;
 
-    if (filteredValue !== 'all') {
       if (filteredValue === 'correct') {
-        filteredQuestions = questions.filter((question, index) => correct.indexOf(index) !== -1);
-        filteredUserInput = userInput.filter((input, index) => correct.indexOf(index) !== -1)
+        questions.forEach((question, index) => {
+          if (correct.indexOf(index) !== -1) {
+            filteredQuestionIndexes.push(index);
+          }
+        });
+      } else if (filteredValue === 'incorrect') {
+        questions.forEach((question, index) => {
+          if (incorrect.indexOf(index) !== -1) {
+            filteredQuestionIndexes.push(index);
+          }
+        });
       } else {
-        filteredQuestions = questions.filter((question, index) => incorrect.indexOf(index) !== -1);
-        filteredUserInput = userInput.filter((input, index) => incorrect.indexOf(index) !== -1)
+        filteredQuestionIndexes = Array.from(Array(questions.length).keys());
       }
-    }
-
-    return (filteredQuestions ? filteredQuestions : questions).map((question, index) => {
-      const userInputIndex = filteredUserInput ? filteredUserInput[index] : userInput[index];
-
-      // Default single to avoid code breaking due to automatic version upgrade
-      let answerSelectionType = question.answerSelectionType || 'single';
-
+    return filteredQuestionIndexes.map((questionIndex, i) => {
+      const userInputIndexes = userInput[questionIndex];
+      const question = questions[questionIndex];
+      const answerSelectionType = question.answerSelectionType || 'single';
       return (
-          <div className="result-answer-wrapper" key={index + 1}>
-            <h3 dangerouslySetInnerHTML={rawMarkup(`Q${question.questionIndex}: ${question.question}`)}/>
-            {question.questionPic && <img src={question.questionPic} alt="image"/>}
-            {renderTags(answerSelectionType, question.correctAnswer.length, question.segment)}
-            <div className="result-answer">
-              {renderAnswerInResult(question, userInputIndex)}
-            </div>
-            <Explanation question={question} isResultPage={true}/>
+        <div className="result-answer-wrapper" key={i}>
+          <h3 dangerouslySetInnerHTML={rawMarkup(`Q${question.questionIndex}: ${question.question}`)}/>
+          {question.questionPic && <img src={question.questionPic} alt="image"/>}
+          {renderTags(answerSelectionType, question.correctAnswer.length, question.segment)}
+          <div className="result-answer">
+            {renderAnswerInResult(question, userInputIndexes)}
           </div>
-      )
-    })
+          <Explanation question={question} isResultPage={true}/>
+        </div>
+      );
+    });
   }, [endQuiz, filteredValue]);
 
-  const renderAnswers = (question, buttons) => {
+  const renderAnswers = (question) => {//, buttons) => {
     const {answers, correctAnswer, questionType} = question;
     let {answerSelectionType} = question;
-    const onClickAnswer = index => checkAnswer(index + 1, correctAnswer, answerSelectionType, {
+    const onClickAnswer = index => checkAnswer(index, correctAnswer, answerSelectionType, {
       userInput,
-      userAttempt,
       currentQuestionIndex,
       continueTillCorrect,
-      showNextQuestionButton,
       incorrect,
       correct,
-      buttonsCount: answers.length,
-      setButtons,
+      showInstantFeedback,
       setCorrectAnswer,
       setIncorrectAnswer,
       setCorrect,
       setIncorrect,
       setShowNextQuestionButton,
       setUserInput,
-      setUserAttempt
     });
 
     // Default single to avoid code breaking due to automatic version upgrade
@@ -190,20 +193,13 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
 
     return answers.map((answer, index) =>
       <Fragment key={index}>
-            {(buttons[index] !== undefined)
-                ? (<button
-                    disabled={buttons[index].disabled || false}
-                    className={`${buttons[index].className} answerBtn btn`}
+            {
+                <button
+                    // disabled={ buttons[index].disabled || false}
+                    className={`${ userInput[currentQuestionIndex] && userInput[currentQuestionIndex].indexOf(index) !== -1 ? showInstantFeedback ? correctAnswer === `${index+1}` || correctAnswer.indexOf(index+1) !== -1 ? 'correct' : 'incorrect' : 'selected' : '' } answerBtn btn`}
                     onClick={() => onClickAnswer(index)}
                 >
                   {questionType === 'text' && <span>{answer}</span>}
-                  {questionType === 'photo' && <img src={answer} alt="image"/>}
-                </button>)
-                : <button
-                    onClick={() => onClickAnswer(index)}
-                    className="answerBtn btn"
-                >
-                  {questionType === 'text' && answer}
                   {questionType === 'photo' && <img src={answer} alt="image"/>}
                 </button>
             }
@@ -270,12 +266,31 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
           <h3 dangerouslySetInnerHTML={rawMarkup(question && question.question)}/>
           {question && question.questionPic && <img src={question.questionPic} alt="image"/>}
           {question && renderTags(answerSelectionTypeState, question.correctAnswer.length, question.segment)}
-          {question && renderAnswers(question, buttons)}
-          {showNextQuestionButton &&
-          <div>
-            <button onClick={() => nextQuestion(currentQuestionIndex)} className="nextQuestionBtn btn">
-              {appLocale.nextQuestionBtn}
-            </button>
+          <div className='answers-container'>
+            {question && renderAnswers(question)} {/*, buttons)} */}
+          </div>
+          {(!showInstantFeedback || showNextQuestionButton) &&
+          <div style={{ display: 'flex' }}>
+            {
+              !showInstantFeedback &&
+              <button onClick={() => previousQuestion(currentQuestionIndex)} className="navigationBtn btn" disabled={currentQuestionIndex === 0}>
+                {appLocale.previousQuestionBtn}
+              </button>
+            }
+            {
+              currentQuestionIndex === questions.length-1 ?
+                <button
+                  onClick={() => nextQuestion(currentQuestionIndex)}
+                  className="navigationBtn btn"
+                  disabled={correct.length + incorrect.length !== questions.length}
+                >
+                  {appLocale.finishQuestionBtn}
+                </button>
+              :
+                <button onClick={() => nextQuestion(currentQuestionIndex)} className="navigationBtn btn">
+                  {appLocale.nextQuestionBtn}
+                </button>
+            }
           </div>
           }
         </div>
