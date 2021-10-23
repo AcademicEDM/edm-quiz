@@ -254,8 +254,8 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
                 incorrectAnswer={incorrectAnswer}
             />
           </div>
-          <div>{appLocale.question} {currentQuestionIndex + 1}:</div>
-          <h3 dangerouslySetInnerHTML={rawMarkup(question && question.question)}/>
+          <h3>{appLocale.question} {currentQuestionIndex + 1}:</h3>
+          <h4 dangerouslySetInnerHTML={rawMarkup(question && question.question)}/>
           {question && question.questionPic && <img src={question.questionPic} alt="image"/>}
           {question && renderTags(answerSelectionTypeState, question.correctAnswer.length, question.segment)}
           <div className='answers-container'>
