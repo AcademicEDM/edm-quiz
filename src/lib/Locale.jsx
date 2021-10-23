@@ -12,5 +12,5 @@ export const defaultLocale =  {
     "resultPagePoint": "You scored <correctPoints> out of <totalPoints>.",
     "singleSelectionTagText": "Single Selection",
     "multipleSelectionTagText": "Multiple Selection",
-    "pickNumberOfSelection": "Pick <numberOfSelection>"
+    "pickNumberOfSelection": "Select <numberOfSelection>"
   } 
