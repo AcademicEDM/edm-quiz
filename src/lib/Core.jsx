@@ -122,13 +122,11 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
       }
 
       return (
-          <div key={index}>
-            <button disabled={true}
-                    className={"answerBtn btn " + answerBtnCorrectClassName + answerBtnIncorrectClassName}>
-              {questionType === 'text' && <span>{answer}</span>}
-              {questionType === 'photo' && <img src={answer} alt="image"/>}
-            </button>
-          </div>
+          <button disabled={true} key={index}
+                  className={"answerBtn btn " + answerBtnCorrectClassName + answerBtnIncorrectClassName}>
+            {questionType === 'text' && <span>{answer}</span>}
+            {questionType === 'photo' && <img src={answer} alt="image"/>}
+          </button>
       )
     });
   };
@@ -159,7 +157,7 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
       return (
         <div className="result-answer-wrapper" key={i}>
           <h3 dangerouslySetInnerHTML={rawMarkup(`Q${question.questionIndex}: ${question.question}`)}/>
-          {question.questionPic && <img src={question.questionPic} alt="image"/>}
+          {question.questionPic && <img src={question.questionPic} className='question-pic' alt="image"/>}
           {renderTags(answerSelectionType, question.correctAnswer.length, question.segment)}
           <div className="result-answer">
             {renderAnswerInResult(question, userInputIndexes)}
@@ -170,7 +168,7 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
     });
   }, [endQuiz, filteredValue]);
 
-  const renderAnswers = (question) => {//, buttons) => {
+  const renderAnswers = (question) => {
     const {answers, correctAnswer, questionType} = question;
     let {answerSelectionType} = question;
     const onClickAnswer = index => checkAnswer(index, correctAnswer, answerSelectionType, {
@@ -256,7 +254,7 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
           </div>
           <h3>{appLocale.question} {currentQuestionIndex + 1}:</h3>
           <h4 dangerouslySetInnerHTML={rawMarkup(question && question.question)}/>
-          {question && question.questionPic && <img src={question.questionPic} alt="image"/>}
+          {question && question.questionPic && <img src={question.questionPic} className='question-pic' alt="image"/>}
           {question && renderTags(answerSelectionTypeState, question.correctAnswer.length, question.segment)}
           <div className='answers-container'>
             {question && renderAnswers(question)} {/*, buttons)} */}
