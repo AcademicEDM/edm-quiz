@@ -127,7 +127,6 @@
 }
 
 .react-quiz-container .result-answer {
-  padding: 0px 20px;
   display: flex;
   flex-wrap: wrap;
   margin: 20px;
