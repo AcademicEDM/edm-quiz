@@ -55,6 +55,7 @@
 
 .react-quiz-container .correct {
   background: green;
+  color: white;
 }
 
 .react-quiz-container .incorrect {

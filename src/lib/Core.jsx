@@ -5,7 +5,7 @@ import {checkAnswer, rawMarkup} from "./core-components/helpers";
 import InstantFeedback from "./core-components/InstantFeedback";
 import Explanation from "./core-components/Explanation";
 
-const Core = ({questions, appLocale, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect}) => {
+const Core = ({questions, appLocale, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, showColorCode}) => {
   const [incorrectAnswer, setIncorrectAnswer] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState(false);
   const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
@@ -230,6 +230,17 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
         <h2>
           {appLocale.resultPagePoint.replace("<correctPoints>", correctPoints).replace("<totalPoints>", totalPoints)}
         </h2>
+        {
+          showColorCode &&
+          <div>
+            <span className='correct' style={{ padding: '10px' }}>
+              Correct option
+            </span>
+            <span className='incorrect' style={{ padding: '10px', marginLeft: '15px' }}>
+              Incorrect option
+            </span>
+          </div>
+        }
         <br/>
         <QuizResultFilter
             filteredValue={filteredValue}
