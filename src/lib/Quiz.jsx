@@ -4,7 +4,7 @@ import Core from './Core';
 import { defaultLocale } from './Locale';
 import "./styles.css";
 
-const Quiz = ({ quiz, shuffle, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, allowQuestionNavigation }) => {
+const Quiz = ({ quiz, shuffle, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect }) => {
   const [start, setStart] = useState(false)
   const [questions, setQuestions] = useState(quiz.questions)
 
@@ -110,6 +110,12 @@ const Quiz = ({ quiz, shuffle, showDefaultResult, onComplete, customResultPage, 
           <div>
             <h2>{quiz.quizTitle}</h2>
             <div>{appLocale.landingHeaderText.replace("<questionLength>" , quiz.questions.length)}</div>
+            {
+              !showInstantFeedback &&
+              <div>
+                {appLocale.allQuestionsMandatory}
+              </div>
+            }
             {quiz.quizSynopsis &&
               <div className="quiz-synopsis">
                   {quiz.quizSynopsis}

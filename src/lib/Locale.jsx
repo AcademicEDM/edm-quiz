@@ -1,5 +1,6 @@
 export const defaultLocale =  {
     "landingHeaderText": "<questionLength> Questions",
+    "allQuestionsMandatory": "All questions are mandatory to submit the quiz",
     "question": "Question",
     "startQuizBtn": "Start Quiz",
     "resultFilterAll": "All",
@@ -7,10 +8,11 @@ export const defaultLocale =  {
     "resultFilterIncorrect": "Incorrect",
     "nextQuestionBtn": "Next >",
     "previousQuestionBtn": "< Prev",
-    "finishQuestionBtn": "Finish",
+    "finishQuestionBtn": "Submit",
     "resultPageHeaderText": "You have completed the quiz. You got <correctIndexLength> out of <questionLength> questions.",
     "resultPagePoint": "You scored <correctPoints> out of <totalPoints>.",
     "singleSelectionTagText": "Single Selection",
     "multipleSelectionTagText": "Multiple Selection",
-    "pickNumberOfSelection": "Select <numberOfSelection>"
+    "pickNumberOfSelection": "Select <numberOfSelection>",
+    "questionsLeftToAnswer": "Question(s) <questionNumbers> need to be answered before submitting the quiz",
   } 

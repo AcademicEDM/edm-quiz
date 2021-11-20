@@ -240,6 +240,8 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
       </div>
   );
 
+  const nonAttmeptedQuestionNumbers = Array.from(Array(questions.length).keys()).filter(q => !(correct.includes(q) || incorrect.includes(q)));
+
   return (
       <div className="questionWrapper">
         {!endQuiz &&
@@ -269,13 +271,21 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
             }
             {
               currentQuestionIndex === questions.length-1 ?
-                <button
-                  onClick={() => nextQuestion(currentQuestionIndex)}
-                  className="navigationBtn btn"
-                  disabled={correct.length + incorrect.length !== questions.length}
-                >
-                  {appLocale.finishQuestionBtn}
-                </button>
+                <>
+                  <button
+                    onClick={() => nextQuestion(currentQuestionIndex)}
+                    className="navigationBtn btn"
+                    disabled={nonAttmeptedQuestionNumbers.length > 0}
+                  >
+                    {appLocale.finishQuestionBtn}
+                  </button>
+                  {
+                    nonAttmeptedQuestionNumbers.length > 0 &&
+                    <span className='horizontal-center warning-message'>
+                      {appLocale.questionsLeftToAnswer.replace('<questionNumbers>', nonAttmeptedQuestionNumbers.map(q => q + 1).join(', '))}
+                    </span>
+                  }
+                </>
               :
                 <button onClick={() => nextQuestion(currentQuestionIndex)} className="navigationBtn btn">
                   {appLocale.nextQuestionBtn}

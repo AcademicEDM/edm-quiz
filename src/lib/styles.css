@@ -66,6 +66,14 @@
   margin: 0px 5px;
 }
 
+.react-quiz-container .horizontal-center {
+  align-self: center;
+}
+
+.react-quiz-container .warning-message {
+  color: red;
+}
+
 .react-quiz-container .questionWrapper img {
   width: 100%;
 }
