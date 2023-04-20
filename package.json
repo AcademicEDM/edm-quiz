@@ -19,7 +19,7 @@
     "quiz"
   ],
   "peerDependencies": {
-    "react": "^15.3.0 || ^16.2.0",
+    "react": "^17.0.2",
     "react-dom": "^15.3.0 || ^16.2.0"
   },
   "devDependencies": {
@@ -32,14 +32,14 @@
     "babel-loader": "^8.0.5",
     "concurrently": "^3.5.1",
     "css-loader": "^3.4.2",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.0",
     "style-loader": "^0.21.0",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0",
-    "prop-types": "^15.7.2"
+    "webpack-dev-server": "^3.11.0"
   },
   "author": "Academic EDM",
   "homepage": "https://github.com/AcademicEDM/edm-quiz",
@@ -50,6 +50,6 @@
   },
   "dependencies": {
     "dompurify": "^2.0.8",
-    "marked": "^0.7.0"
+    "marked": "^4.3.0"
   }
 }
