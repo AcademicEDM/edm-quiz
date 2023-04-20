@@ -1,6 +1,6 @@
 {
-  "name": "@nnischal95/react-quiz-component",
-  "version": "0.4.7",
+  "name": "@edm-quiz/react-quiz-component",
+  "version": "0.1.0",
   "description": "React Quiz Component",
   "main": "lib/Quiz.js",
   "scripts": {
@@ -41,12 +41,12 @@
     "webpack-dev-server": "^3.11.0",
     "prop-types": "^15.7.2"
   },
-  "author": "Nimesh Nischal <n.nischal.1994@gmail.com>",
-  "homepage": "https://github.com/nimeshnischal/react-quiz-component",
+  "author": "Academic EDM",
+  "homepage": "https://github.com/AcademicEDM/edm-quiz",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:nimeshnischal/react-quiz-component.git",
-    "directory": "@nimeshnischal/react-quiz-component"
+    "url": "ssh://git@github.com:AcademicEDM/edm-quiz.git",
+    "directory": "@AcademicEDM/edm-quiz"
   },
   "dependencies": {
     "dompurify": "^2.0.8",
