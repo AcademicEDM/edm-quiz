@@ -1,5 +1,5 @@
 {
-  "name": "@edm-quiz/react-quiz-component",
+  "name": "@saukale21/react-quiz-component",
   "version": "0.1.0",
   "description": "React Quiz Component",
   "main": "lib/Quiz.js",
