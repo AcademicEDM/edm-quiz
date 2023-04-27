@@ -5,7 +5,7 @@ import {checkAnswer, rawMarkup} from "./core-components/helpers";
 import InstantFeedback from "./core-components/InstantFeedback";
 import Explanation from "./core-components/Explanation";
 
-const Core = ({questions, appLocale, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, showColorCode}) => {
+const Core = ({category, quizHeader, questions, appLocale, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, showColorCode}) => {
   const [incorrectAnswer, setIncorrectAnswer] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState(false);
   const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
@@ -223,6 +223,14 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
   };
 
   const renderResult = () => (
+    <div>
+      <a
+      style={{width:"125px"}}
+      className="btn btn-primary"
+      href={`/quizzes/${category}`}
+      >
+          Back to Quiz
+      </a>
       <div className="card-body">
         <h2>
           {appLocale.resultPageHeaderText.replace("<correctIndexLength>", correct.length).replace("<questionLength>", questions.length)}
@@ -249,12 +257,15 @@ const Core = ({questions, appLocale, showDefaultResult, onComplete, customResult
         />
         {renderQuizResultQuestions()}
       </div>
+    </div>
+
   );
 
   const nonAttmeptedQuestionNumbers = Array.from(Array(questions.length).keys()).filter(q => !(correct.includes(q) || incorrect.includes(q)));
 
   return (
       <div className="questionWrapper">
+        <h2>{quizHeader}</h2>
         {!endQuiz &&
         <div className="questionWrapperBody">
           <div className="questionModal">

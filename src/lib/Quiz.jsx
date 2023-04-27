@@ -4,7 +4,7 @@ import Core from './Core';
 import { defaultLocale } from './Locale';
 import "./styles.css";
 
-const Quiz = ({ quiz, shuffle, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, showColorCode }) => {
+const Quiz = ({ quiz, category, shuffle, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, showColorCode }) => {
   const [start, setStart] = useState(false)
   const [questions, setQuestions] = useState(quiz.questions)
 
@@ -108,7 +108,7 @@ const Quiz = ({ quiz, shuffle, showDefaultResult, onComplete, customResultPage, 
       <div className="react-quiz-container">
         {!start &&
           <div>
-            <h2>{quiz.quizTitle}</h2>
+            <h2 style={{marginBottom:"10px"}}>{quiz.quizTitle}</h2>
             <div>{appLocale.landingHeaderText.replace("<questionLength>" , quiz.questions.length)}</div>
             {
               !showInstantFeedback &&
@@ -128,6 +128,8 @@ const Quiz = ({ quiz, shuffle, showDefaultResult, onComplete, customResultPage, 
         }
 
         {start && <Core
+                    category={category}
+                    quizHeader={quiz.quizTitle}
                     questions={questions}
                     showDefaultResult={showDefaultResult}
                     onComplete={onComplete}
