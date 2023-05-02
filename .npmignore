@@ -1,12 +1,13 @@
 docs
 src
-!src/lib
 .babelrc
 webpack.config.js
 node_modules
-src/lib/Core.jsx
-src/lib/Locale.jsx
-src/lib/Quiz.jsx
-src/lib/core-components/Explanation.jsx
-src/lib/core-components/InstantFeedback.jsx
-src/lib/core-components/QuizResultFilter.jsx
+!lib
+# lib/Core.jsx
+# lib/Locale.jsx
+# lib/Quiz.jsx
+# lib/core-components/Explanation.jsx
+# lib/core-components/InstantFeedback.jsx
+# lib/core-components/QuizResultFilter.jsx
+# lib/styles.css

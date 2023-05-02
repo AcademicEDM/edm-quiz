@@ -30,7 +30,8 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var Core = function Core(_ref) {
-  var category = _ref.category,
+  var quizId = _ref.quizId,
+      category = _ref.category,
       quizHeader = _ref.quizHeader,
       questions = _ref.questions,
       appLocale = _ref.appLocale,
@@ -342,7 +343,13 @@ var Core = function Core(_ref) {
       filteredValue: filteredValue,
       handleChange: handleChange,
       appLocale: appLocale
-    }), renderQuizResultQuestions()));
+    }), renderQuizResultQuestions()), _react.default.createElement("a", {
+      style: {
+        width: "125px"
+      },
+      className: "btn btn-primary",
+      href: "/quiz/".concat(quizId)
+    }, "Retake Quiz"));
   };
 
   var nonAttmeptedQuestionNumbers = Array.from(Array(questions.length).keys()).filter(function (q) {

@@ -34,6 +34,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var Quiz = function Quiz(_ref) {
   var quiz = _ref.quiz,
       category = _ref.category,
+      quizId = _ref.quizId,
       shuffle = _ref.shuffle,
       showDefaultResult = _ref.showDefaultResult,
       onComplete = _ref.onComplete,
@@ -170,6 +171,7 @@ var Quiz = function Quiz(_ref) {
     },
     className: "startQuizBtn btn"
   }, appLocale.startQuizBtn))), start && _react.default.createElement(_Core.default, {
+    quizId: quizId,
     category: category,
     quizHeader: quiz.quizTitle,
     questions: questions,

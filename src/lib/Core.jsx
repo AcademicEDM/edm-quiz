@@ -5,7 +5,7 @@ import {checkAnswer, rawMarkup} from "./core-components/helpers";
 import InstantFeedback from "./core-components/InstantFeedback";
 import Explanation from "./core-components/Explanation";
 
-const Core = ({category, quizHeader, questions, appLocale, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, showColorCode}) => {
+const Core = ({quizId, category, quizHeader, questions, appLocale, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, showColorCode}) => {
   const [incorrectAnswer, setIncorrectAnswer] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState(false);
   const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
@@ -257,6 +257,13 @@ const Core = ({category, quizHeader, questions, appLocale, showDefaultResult, on
         />
         {renderQuizResultQuestions()}
       </div>
+      <a
+      style={{width:"125px"}}
+      className="btn btn-primary"
+      href={`/quiz/${quizId}`}
+      >
+          Retake Quiz
+      </a>
     </div>
 
   );
