@@ -4,7 +4,7 @@ import Core from './Core';
 import { defaultLocale } from './Locale';
 import "./styles.css";
 
-const Quiz = ({ quiz, category, quizId, shuffle, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, showColorCode }) => {
+const Quiz = ({ quiz, courseId, quizId, shuffle, showDefaultResult, onComplete, customResultPage, showInstantFeedback, continueTillCorrect, showColorCode }) => {
   const [start, setStart] = useState(false)
   const [questions, setQuestions] = useState(quiz.questions)
 
@@ -129,7 +129,7 @@ const Quiz = ({ quiz, category, quizId, shuffle, showDefaultResult, onComplete, 
 
         {start && <Core
                     quizId={quizId}
-                    category={category}
+                    courseId={courseId}
                     quizHeader={quiz.quizTitle}
                     questions={questions}
                     showDefaultResult={showDefaultResult}
@@ -147,6 +147,7 @@ const Quiz = ({ quiz, category, quizId, shuffle, showDefaultResult, onComplete, 
 
 Quiz.propTypes = {
   quiz: PropTypes.object,
+  courseId: PropTypes.string,
   shuffle: PropTypes.bool,
   showDefaultResult: PropTypes.bool,
   onComplete: PropTypes.func,
