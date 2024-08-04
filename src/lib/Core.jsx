@@ -266,7 +266,7 @@ const Core = ({
       multipleSelectionTagText,
       pickNumberOfSelection,
     } = appLocale;
-    var num_to_word_mapping=new Map(
+    const num_to_word_mapping=new Map(
       [
         [1,"one"],
         [2,"two"],
@@ -274,7 +274,7 @@ const Core = ({
         [4,"four"]
       ]
     );
-    num_to_word_mapping
+    
     return (
       <div className="tag-container">
         <span className="number-of-selection">
