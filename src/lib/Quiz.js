@@ -81,6 +81,8 @@ var Quiz = function Quiz(_ref) {
     if (!quiz) {
       console.error("Quiz object is required.");
       return false;
+    } else {
+      console.log("Quiz object is present.");
     }
 
     var questions = quiz.questions;

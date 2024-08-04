@@ -31,9 +31,13 @@ const Quiz = ({ quiz, courseId, quizId, shuffle, showDefaultResult, onComplete, 
   }, [])
 
   const validateQuiz = (quiz) => {
+
     if(!quiz) {
       console.error("Quiz object is required.");
       return false;
+    }
+    else{
+      console.log("Quiz object is present.");
     }
 
     const { questions } = quiz;

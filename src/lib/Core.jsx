@@ -266,13 +266,21 @@ const Core = ({
       multipleSelectionTagText,
       pickNumberOfSelection,
     } = appLocale;
-
+    var num_to_word_mapping=new Map(
+      [
+        [1,"one"],
+        [2,"two"],
+        [3,"three"],
+        [4,"four"]
+      ]
+    );
+    num_to_word_mapping
     return (
       <div className="tag-container">
         <span className="number-of-selection">
           {pickNumberOfSelection.replace(
             "<numberOfSelection>",
-            numberOfSelection
+            num_to_word_mapping[numberOfSelection]
           )}
         </span>
         {segment && <span className="selection-tag segment">{segment}</span>}
