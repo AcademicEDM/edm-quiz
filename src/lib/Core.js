@@ -311,7 +311,6 @@ var Core = function Core(_ref) {
         multipleSelectionTagText = appLocale.multipleSelectionTagText,
         pickNumberOfSelection = appLocale.pickNumberOfSelection;
     var num_to_word_mapping = new Map([[1, "one"], [2, "two"], [3, "three"], [4, "four"]]);
-    num_to_word_mapping;
     return _react.default.createElement("div", {
       className: "tag-container"
     }, _react.default.createElement("span", {
