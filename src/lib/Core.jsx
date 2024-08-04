@@ -280,7 +280,7 @@ const Core = ({
         <span className="number-of-selection">
           {pickNumberOfSelection.replace(
             "<numberOfSelection>",
-            num_to_word_mapping[numberOfSelection]
+            num_to_word_mapping.get(numberOfSelection)
           )}
         </span>
         {segment && <span className="selection-tag segment">{segment}</span>}

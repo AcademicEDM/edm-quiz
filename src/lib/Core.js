@@ -315,7 +315,7 @@ var Core = function Core(_ref) {
       className: "tag-container"
     }, _react.default.createElement("span", {
       className: "number-of-selection"
-    }, pickNumberOfSelection.replace("<numberOfSelection>", num_to_word_mapping[numberOfSelection])), segment && _react.default.createElement("span", {
+    }, pickNumberOfSelection.replace("<numberOfSelection>", num_to_word_mapping.get(numberOfSelection))), segment && _react.default.createElement("span", {
       className: "selection-tag segment"
     }, segment));
   };
