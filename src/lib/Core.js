@@ -29,7 +29,7 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var Core = function Core(_ref) {
+var _default = Core = function Core(_ref) {
   var quizId = _ref.quizId,
       courseId = _ref.courseId,
       quizHeader = _ref.quizHeader,
@@ -409,6 +409,7 @@ var Core = function Core(_ref) {
   }, appLocale.nextQuestionBtn))), endQuiz && showDefaultResultState && customResultPage === undefined && renderResult(), endQuiz && !showDefaultResultState && customResultPage !== undefined && customResultPage(questionSummary));
 };
 
+exports.default = _default;
 Core.propTypes = {
   questions: _propTypes.default.array,
   showDefaultResult: _propTypes.default.bool,
@@ -418,5 +419,3 @@ Core.propTypes = {
   continueTillCorrect: _propTypes.default.bool,
   appLocale: _propTypes.default.object
 };
-var _default = Core;
-exports.default = _default;

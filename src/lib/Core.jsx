@@ -5,7 +5,7 @@ import { checkAnswer, rawMarkup } from "./core-components/helpers";
 import InstantFeedback from "./core-components/InstantFeedback";
 import Explanation from "./core-components/Explanation";
 
-const Core = ({
+export default Core = ({
   quizId,
   courseId,
   quizHeader,
@@ -447,4 +447,4 @@ Core.propTypes = {
   appLocale: PropTypes.object,
 };
 
-export default Core;
+
