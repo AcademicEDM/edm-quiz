@@ -36,9 +36,7 @@ const Quiz = ({ quiz, courseId, quizId, shuffle, showDefaultResult, onComplete, 
       console.error("Quiz object is required.");
       return false;
     }
-    else{
-      console.log("Quiz object is present.");
-    }
+    
 
     const { questions } = quiz;
     if(!questions ) {

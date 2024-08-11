@@ -117,6 +117,7 @@ var _default = Core = function Core(_ref) {
       questionSummary = _useState30[0],
       setQuestionSummary = _useState30[1];
 
+  var num_to_word_mapping = new Map([[1, "one"], [2, "two"], [3, "three"], [4, "four"]]);
   (0, _react.useEffect)(function () {
     setShowDefaultResult(showDefaultResult !== undefined ? showDefaultResult : true);
   }, [showDefaultResult]);
@@ -310,7 +311,6 @@ var _default = Core = function Core(_ref) {
     var singleSelectionTagText = appLocale.singleSelectionTagText,
         multipleSelectionTagText = appLocale.multipleSelectionTagText,
         pickNumberOfSelection = appLocale.pickNumberOfSelection;
-    var num_to_word_mapping = new Map([[1, "one"], [2, "two"], [3, "three"], [4, "four"]]);
     return _react.default.createElement("div", {
       className: "tag-container"
     }, _react.default.createElement("span", {

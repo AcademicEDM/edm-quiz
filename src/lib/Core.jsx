@@ -35,7 +35,14 @@ export default Core = ({
   const [correctPoints, setCorrectPoints] = useState(0);
   const [question, setQuestion] = useState(questions[currentQuestionIndex]);
   const [questionSummary, setQuestionSummary] = useState(undefined);
-
+  const num_to_word_mapping=new Map(
+    [
+      [1,"one"],
+      [2,"two"],
+      [3,"three"],
+      [4,"four"]
+    ]
+  );
   useEffect(() => {
     setShowDefaultResult(
       showDefaultResult !== undefined ? showDefaultResult : true
@@ -266,14 +273,7 @@ export default Core = ({
       multipleSelectionTagText,
       pickNumberOfSelection,
     } = appLocale;
-    const num_to_word_mapping=new Map(
-      [
-        [1,"one"],
-        [2,"two"],
-        [3,"three"],
-        [4,"four"]
-      ]
-    );
+    
     
     return (
       <div className="tag-container">
