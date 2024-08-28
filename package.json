@@ -9,7 +9,9 @@
     "lib:watch": "babel src/lib -w -d lib --copy-files",
     "docs": "webpack-dev-server --mode development",
     "docs:prod": "webpack --mode production",
-    "build": "./node_modules/.bin/webpack --mode production"
+    "build": "./node_modules/.bin/webpack --mode production",
+    "make": "npm run lib && webpack --mode production",
+    "pmake": "babel src/lib -w -d src/lib && npm run make"
   },
   "keywords": [
     "react",

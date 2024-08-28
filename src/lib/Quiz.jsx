@@ -108,7 +108,7 @@ const Quiz = ({ quiz, courseId, quizId, shuffle, showDefaultResult, onComplete, 
       <div className="react-quiz-container">
         {!start &&
           <div>
-            <h2 style={{marginBottom:"10px"}}>{quiz.quizTitle}</h2>
+            <h2 style={{marginBottom:"10px"}}>Quiz Name: {quiz.quizTitle}</h2>
             <div>{appLocale.landingHeaderText.replace("<questionLength>" , quiz.questions.length)}</div>
             {
               !showInstantFeedback &&
