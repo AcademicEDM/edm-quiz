@@ -161,7 +161,7 @@ var Quiz = function Quiz(_ref) {
     style: {
       marginBottom: "10px"
     }
-  }, quiz.quizTitle), _react.default.createElement("div", null, appLocale.landingHeaderText.replace("<questionLength>", quiz.questions.length)), !showInstantFeedback && _react.default.createElement("div", null, appLocale.allQuestionsMandatory), quiz.quizSynopsis && _react.default.createElement("div", {
+  }, "Quiz Name: ", quiz.quizTitle), _react.default.createElement("div", null, appLocale.landingHeaderText.replace("<questionLength>", quiz.questions.length)), !showInstantFeedback && _react.default.createElement("div", null, appLocale.allQuestionsMandatory), quiz.quizSynopsis && _react.default.createElement("div", {
     className: "quiz-synopsis"
   }, quiz.quizSynopsis), _react.default.createElement("div", {
     className: "startQuizWrapper"

@@ -17,78 +17,21 @@ var _InstantFeedback = _interopRequireDefault(require("./core-components/Instant
 
 var _Explanation = _interopRequireDefault(require("./core-components/Explanation"));
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    default: obj
-  };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) {
-  if (obj && obj.__esModule) {
-    return obj;
-  } else {
-    var newObj = {};
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-    if (obj != null) {
-      for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-          if (desc.get || desc.set) {
-            Object.defineProperty(newObj, key, desc);
-          } else {
-            newObj[key] = obj[key];
-          }
-        }
-      }
-    }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-    newObj.default = obj;
-    return newObj;
-  }
-}
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
-}
-
-function _iterableToArrayLimit(arr, i) {
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var Core = function Core(_ref) {
   var quizId = _ref.quizId,
-      category = _ref.category,
+      courseId = _ref.courseId,
       quizHeader = _ref.quizHeader,
       questions = _ref.questions,
       appLocale = _ref.appLocale,
@@ -139,7 +82,7 @@ var Core = function Core(_ref) {
       userInput = _useState16[0],
       setUserInput = _useState16[1];
 
-  var _useState17 = (0, _react.useState)('all'),
+  var _useState17 = (0, _react.useState)("all"),
       _useState18 = _slicedToArray(_useState17, 2),
       filteredValue = _useState18[0],
       setFilteredValue = _useState18[1];
@@ -183,7 +126,7 @@ var Core = function Core(_ref) {
   (0, _react.useEffect)(function () {
     var answerSelectionType = question.answerSelectionType; // Default single to avoid code breaking due to automatic version upgrade
 
-    setAnswerSelectionType(answerSelectionType || 'single');
+    setAnswerSelectionType(answerSelectionType || "single");
   }, [question, currentQuestionIndex]);
   (0, _react.useEffect)(function () {
     if (endQuiz) {
@@ -193,7 +136,7 @@ var Core = function Core(_ref) {
       for (var i = 0; i < questions.length; i++) {
         var point = questions[i].point || 0;
 
-        if (typeof point === 'string' || point instanceof String) {
+        if (typeof point === "string" || point instanceof String) {
           point = parseInt(point);
         }
 
@@ -258,23 +201,23 @@ var Core = function Core(_ref) {
     var answerBtnCorrectClassName;
     var answerBtnIncorrectClassName; // Default single to avoid code breaking due to automatic version upgrade
 
-    answerSelectionType = answerSelectionType || 'single';
+    answerSelectionType = answerSelectionType || "single";
     return answers.map(function (answer, index) {
-      if (answerSelectionType === 'single') {
+      if (answerSelectionType === "single") {
         // correctAnswer - is string
-        answerBtnCorrectClassName = "".concat(index + 1) === correctAnswer ? 'correct' : '';
-        answerBtnIncorrectClassName = "".concat(index + 1) !== correctAnswer && userInputIndexes.includes(index) ? 'incorrect' : '';
+        answerBtnCorrectClassName = "".concat(index + 1) === correctAnswer ? "correct" : "";
+        answerBtnIncorrectClassName = "".concat(index + 1) !== correctAnswer && userInputIndexes.includes(index) ? "incorrect" : "";
       } else {
         // correctAnswer - is array of numbers
-        answerBtnCorrectClassName = correctAnswer.includes(index + 1) ? 'correct' : '';
-        answerBtnIncorrectClassName = !correctAnswer.includes(index + 1) && userInputIndexes.includes(index) ? 'incorrect' : '';
+        answerBtnCorrectClassName = correctAnswer.includes(index + 1) ? "correct" : "";
+        answerBtnIncorrectClassName = !correctAnswer.includes(index + 1) && userInputIndexes.includes(index) ? "incorrect" : "";
       }
 
       return _react.default.createElement("button", {
         disabled: true,
         key: index,
         className: "answerBtn btn " + answerBtnCorrectClassName + answerBtnIncorrectClassName
-      }, questionType === 'text' && _react.default.createElement("span", null, answer), questionType === 'photo' && _react.default.createElement("img", {
+      }, questionType === "text" && _react.default.createElement("span", null, answer), questionType === "photo" && _react.default.createElement("img", {
         src: answer,
         alt: "image"
       }));
@@ -284,13 +227,13 @@ var Core = function Core(_ref) {
   var renderQuizResultQuestions = (0, _react.useCallback)(function () {
     var filteredQuestionIndexes = []; // let filteredUserInput = userInput;
 
-    if (filteredValue === 'correct') {
+    if (filteredValue === "correct") {
       questions.forEach(function (question, index) {
         if (correct.indexOf(index) !== -1) {
           filteredQuestionIndexes.push(index);
         }
       });
-    } else if (filteredValue === 'incorrect') {
+    } else if (filteredValue === "incorrect") {
       questions.forEach(function (question, index) {
         if (incorrect.indexOf(index) !== -1) {
           filteredQuestionIndexes.push(index);
@@ -303,7 +246,7 @@ var Core = function Core(_ref) {
     return filteredQuestionIndexes.map(function (questionIndex, i) {
       var userInputIndexes = userInput[questionIndex];
       var question = questions[questionIndex];
-      var answerSelectionType = question.answerSelectionType || 'single';
+      var answerSelectionType = question.answerSelectionType || "single";
       return _react.default.createElement("div", {
         className: "result-answer-wrapper",
         key: i
@@ -346,17 +289,17 @@ var Core = function Core(_ref) {
     }; // Default single to avoid code breaking due to automatic version upgrade
 
 
-    answerSelectionType = answerSelectionType || 'single';
+    answerSelectionType = answerSelectionType || "single";
     return answers.map(function (answer, index) {
       return _react.default.createElement(_react.Fragment, {
         key: index
       }, _react.default.createElement("button", {
         // disabled={ buttons[index].disabled || false}
-        className: "".concat(userInput[currentQuestionIndex] && userInput[currentQuestionIndex].indexOf(index) !== -1 ? showInstantFeedback ? correctAnswer === "".concat(index + 1) || correctAnswer.indexOf(index + 1) !== -1 ? 'correct' : 'incorrect' : 'selected' : '', " answerBtn btn"),
+        className: "".concat(userInput[currentQuestionIndex] && userInput[currentQuestionIndex].indexOf(index) !== -1 ? showInstantFeedback ? correctAnswer === "".concat(index + 1) || correctAnswer.indexOf(index + 1) !== -1 ? "correct" : "incorrect" : "selected" : "", " answerBtn btn"),
         onClick: function onClick() {
           return onClickAnswer(index);
         }
-      }, questionType === 'text' && _react.default.createElement("span", null, answer), questionType === 'photo' && _react.default.createElement("img", {
+      }, questionType === "text" && _react.default.createElement("span", null, answer), questionType === "photo" && _react.default.createElement("img", {
         src: answer,
         alt: "image"
       })));
@@ -382,19 +325,25 @@ var Core = function Core(_ref) {
         width: "125px"
       },
       className: "btn btn-primary",
-      href: "/quizzes/".concat(category)
+      href: "/course/home/".concat(courseId)
     }, "Back to Quiz"), _react.default.createElement("div", {
       className: "card-body"
-    }, _react.default.createElement("h2", null, appLocale.resultPageHeaderText.replace("<correctIndexLength>", correct.length).replace("<questionLength>", questions.length)), _react.default.createElement("h2", null, appLocale.resultPagePoint.replace("<correctPoints>", correctPoints).replace("<totalPoints>", totalPoints)), showColorCode && _react.default.createElement("div", null, _react.default.createElement("span", {
+    }, _react.default.createElement("h2", null, appLocale.resultPageHeaderText.replace("<correctIndexLength>", correct.length).replace("<questionLength>", questions.length)), _react.default.createElement("h2", null, appLocale.resultPagePoint.replace("<correctPoints>", correctPoints).replace("<totalPoints>", totalPoints)), showColorCode && _react.default.createElement("div", {
+      style: {
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "center"
+      }
+    }, _react.default.createElement("span", {
       className: "correct",
       style: {
-        padding: '10px'
+        padding: "10px"
       }
     }, "Correct option"), _react.default.createElement("span", {
       className: "incorrect",
       style: {
-        padding: '10px',
-        marginLeft: '15px'
+        padding: "10px",
+        marginLeft: "15px"
       }
     }, "Incorrect option")), _react.default.createElement("br", null), _react.default.createElement(_QuizResultFilter.default, {
       filteredValue: filteredValue,
@@ -433,7 +382,7 @@ var Core = function Core(_ref) {
     className: "answers-container"
   }, question && renderAnswers(question), " "), (!showInstantFeedback || showNextQuestionButton) && _react.default.createElement("div", {
     style: {
-      display: 'flex'
+      display: "flex"
     }
   }, !showInstantFeedback && _react.default.createElement("button", {
     onClick: function onClick() {
@@ -449,9 +398,9 @@ var Core = function Core(_ref) {
     disabled: nonAttmeptedQuestionNumbers.length > 0
   }, appLocale.finishQuestionBtn), nonAttmeptedQuestionNumbers.length > 0 && _react.default.createElement("span", {
     className: "horizontal-center warning-message"
-  }, appLocale.questionsLeftToAnswer.replace('<questionNumbers>', nonAttmeptedQuestionNumbers.map(function (q) {
+  }, appLocale.questionsLeftToAnswer.replace("<questionNumbers>", nonAttmeptedQuestionNumbers.map(function (q) {
     return q + 1;
-  }).join(', ')))) : _react.default.createElement("button", {
+  }).join(", ")))) : _react.default.createElement("button", {
     onClick: function onClick() {
       return nextQuestion(currentQuestionIndex);
     },

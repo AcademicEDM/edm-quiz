@@ -11,7 +11,7 @@
     "docs:prod": "webpack --mode production",
     "build": "./node_modules/.bin/webpack --mode production",
     "make": "npm run lib && webpack --mode production",
-    "pmake": "babel src/lib -w -d src/lib && npm run make"
+    "pmake": "babel src/lib -d src/lib && npm run make"
   },
   "keywords": [
     "react",
